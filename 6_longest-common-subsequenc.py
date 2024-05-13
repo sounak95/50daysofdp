@@ -65,3 +65,16 @@ class Solution(object):
           curr[i] = max(curr[i + 1], next[i])
       next = curr.copy()
     return curr[0]
+
+  def longestCommonSubsequence_so_no_loop_change(self, text1, text2):
+    next_row = [0 for _ in range(len(text2) + 1)]
+    curr_row = [0 for _ in range(len(text2) + 1)]
+
+    for i in range(len(text1) - 1, -1, -1):
+      for j in range(len(text2) - 1, -1, -1):
+        if text1[i] == text2[j]:
+          curr_row[j] = 1 + next_row[j + 1]
+        else:
+          curr_row[j] = max(next_row[j], curr_row[j + 1])
+      next_row = curr_row.copy()
+    return next_row[0]
